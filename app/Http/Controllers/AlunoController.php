@@ -4,26 +4,29 @@ namespace App\Http\Controllers;
 
 use App\Models\Aluno;
 use App\Models\Curso;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
-use Illuminate\Container\Attributes\Storage;
 
 class AlunoController extends Controller
 {
     public function index()
     {
         $aluno = Aluno::all();
+        Gate::authorize('viewAny', Aluno::class);
         return view('aluno.index', compact('aluno'));
     }
 
     public function create()
     {
         $cursos = Curso::all();
+        Gate::authorize('create', Aluno::class);
         return view('aluno.create', compact('cursos'));
     }
 
     public function store(Request $request)
     {
         $curso = Curso::find($request->curso);
+        Gate::authorize('create', Aluno::class);
         if(isset($curso)) {
             $aluno = new Aluno();
             $aluno->nome = mb_strtoupper($request->nome, 'UTF-8');
@@ -52,11 +55,12 @@ class AlunoController extends Controller
 
     public function show(string $id)
     {
-        //
+        Gate::authorize('view', Aluno::class);
     }
     public function edit(string $id)
     {
         $aluno = Aluno::find($id);
+        Gate::authorize('update', $aluno);
 
         if (isset($aluno)) {
             $curso = Curso::all();
@@ -68,6 +72,7 @@ class AlunoController extends Controller
     }
     public function update(Request $request, string $id){
         $aluno = Aluno::find($id);
+        Gate::authorize('update', $aluno);
         $curso = Curso::find($request->curso);
         if(!$aluno){
             return redirect()->route('aluno.index')->with('erro', 'Aluno não encontrado');
@@ -94,6 +99,7 @@ class AlunoController extends Controller
 
     public function destroy(string $id){
         $aluno = Aluno::find($id);
+        Gate::authorize('delete', $aluno);
 
         if(isset($aluno)){
             $aluno->delete();

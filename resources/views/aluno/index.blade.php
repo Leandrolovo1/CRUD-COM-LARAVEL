@@ -1,15 +1,33 @@
 @extends('templates/main', [
-    'titulo' => 'Sistema Aula' ,
+    'titulo' => 'Sistema Aula',
     'cabecalho' => 'Lista de Alunos',
-    'rota' => '',
+    'rota' => 'aluno.create',
     'relatorio' => '',
+    'class' => App\Models\Aluno::class,
 ])
+
+@can('update', $item)
+    <a href="{{ route('aluno.edit', $item->id) }}" ...>
+        <svg xmlns=PHP ... </svg>
+    </a>
+@endcan
+@can('delete', $item)
+    <a nohref style="cursor:pointer" ...>
+        <svg xmlns="...">
+            ...
+        </svg>
+    </a>
+    <form action="{{ route('aluno.destroy', $item->id) }}" ...>
+        @csrf
+        @method('delete')
+    </form>
+@endcan
 @section('conteudo')
     <a href="{{ route('aluno.create') }}" class="btn btn-info">Criar um Novo Aluno</a>
     <table class="table .table-striped">
         <thead>
             <tr>
-                
+
                 <th class="text-secondary">FOTO</th>
                 <th class="text-secondary">NOME</th>
                 <th class="d-none d-md-table-cell text-secondary">TURMA</th>
@@ -20,21 +38,22 @@
         <tbody>
             @foreach ($aluno as $a)
                 <tr>
-                    <td >
+                    <td>
                         @if ($a->foto)
-                        <img src="{{ asset('storage/' . $a->foto) }}" width="120">
+                            <img src="{{ asset('storage/' . $a->foto) }}" width="120">
                         @endif
                     </td>
                     <td>{{ $a->nome }}</td>
                     <td>{{ $a->ano }}</td>
                     <td>{{ $a->curso->nome ?? 'sem curso' }}</td>
                     <td>
-                        <form action="{{route('aluno.destroy', $a->id ) }}" method="POST">
+                        <form action="{{ route('aluno.destroy', $a->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('tem certeza que deseja excluir esse {{$a->nome}}?')">Excluir</button>
+                            <button type="submit" class="btn btn-danger btn-sm"
+                                onclick="return confirm('tem certeza que deseja excluir esse {{ $a->nome }}?')">Excluir</button>
                         </form>
-                        <form action="{{route('aluno.edit', $a->id ) }}" method="GET">
+                        <form action="{{ route('aluno.edit', $a->id) }}" method="GET">
                             <button type="submit" class="btn btn-primary btn-sm"> Editar </button>
                         </form>
                     </td>

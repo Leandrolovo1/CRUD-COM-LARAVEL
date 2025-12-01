@@ -6,6 +6,8 @@ use App\Http\Controllers\AlunoController;
 use App\Http\Controllers\CursoController;
 use App\Http\Controllers\DisciplinasController;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\OrdemDeServicoController;
+use App\Models\OrdemDeServico;
 
 Route::get('/', function () {
     return view('welcome');
@@ -33,6 +35,7 @@ route::resource('/curso', CursoController::class);
 
 route::resource('/disciplina', DisciplinasController::class);
 
+route::resource('/ordemServicos', OrdemDeServicoController::class);
 
 route::get('/principal', [MainController::class, 'index']);
 

@@ -13,30 +13,30 @@ class PermissionSeeder extends Seeder
     public function run(): void
     {
         $data = [
-            // PROFESSOR - CURSO
-            ['role_id' => 1, 'resource_id' => 1, 'permission' => 0],
-            ['role_id' => 1, 'resource_id' => 2, 'permission' => 0],
-            ['role_id' => 1, 'resource_id' => 3, 'permission' => 0],
-            ['role_id' => 1, 'resource_id' => 4, 'permission' => 0],
-            ['role_id' => 1, 'resource_id' => 5, 'permission' => 0],
-            // PROFESSOR - ALUNO
-            ['role_id' => 1, 'resource_id' => 6, 'permission' => 1],
-            ['role_id' => 1, 'resource_id' => 7, 'permission' => 1],
-            ['role_id' => 1, 'resource_id' => 8, 'permission' => 1],
-            ['role_id' => 1, 'resource_id' => 9, 'permission' => 1],
-            ['role_id' => 1, 'resource_id' => 10, 'permission' => 0],
-            // COORDENADOR - CURSO
-            ['role_id' => 2, 'resource_id' => 1, 'permission' => 1],
-            ['role_id' => 2, 'resource_id' => 2, 'permission' => 1],
-            ['role_id' => 2, 'resource_id' => 3, 'permission' => 1],
-            ['role_id' => 2, 'resource_id' => 4, 'permission' => 1],
-            ['role_id' => 2, 'resource_id' => 5, 'permission' => 1],
-            // COORDENADOR - ALUNO
-            ['role_id' => 2, 'resource_id' => 6, 'permission' => 1],
-            ['role_id' => 2, 'resource_id' => 7, 'permission' => 1],
-            ['role_id' => 2, 'resource_id' => 8, 'permission' => 1],
-            ['role_id' => 2, 'resource_id' => 9, 'permission' => 1],
-            ['role_id' => 2, 'resource_id' => 10, 'permission' => 1],
+            // CLIENTE - ORDEM DE SERVIÇOS
+            ['role_id' => 1, 'resource_id' => 1, 'permission' => 0],//LISTAR
+            ['role_id' => 1, 'resource_id' => 2, 'permission' => 0],//CRIAR
+            ['role_id' => 1, 'resource_id' => 3, 'permission' => 1],//VER POR ID
+            ['role_id' => 1, 'resource_id' => 4, 'permission' => 0],//EDITAR
+            ['role_id' => 1, 'resource_id' => 5, 'permission' => 0],//DELETAR
+            // CLIENTE - CLIENTE
+            ['role_id' => 1, 'resource_id' => 6, 'permission' => 0],//LISTAR
+            ['role_id' => 1, 'resource_id' => 7, 'permission' => 0],//CRIAR
+            ['role_id' => 1, 'resource_id' => 8, 'permission' => 1],//VER POR ID
+            ['role_id' => 1, 'resource_id' => 9, 'permission' => 1],//EDITAR
+            ['role_id' => 1, 'resource_id' =>10, 'permission' => 0],//DELETAR
+            // TECNICO - ORDEM DE SERVIÇOS
+            ['role_id' => 2, 'resource_id' => 1, 'permission' => 1],//LISTAR
+            ['role_id' => 2, 'resource_id' => 2, 'permission' => 1],//CRIAR
+            ['role_id' => 2, 'resource_id' => 3, 'permission' => 1],//VER POR ID
+            ['role_id' => 2, 'resource_id' => 4, 'permission' => 1],//EDITAR
+            ['role_id' => 2, 'resource_id' => 5, 'permission' => 1],//DELETAR
+            // TECNICO - CLIENTE
+            ['role_id' => 2, 'resource_id' => 6, 'permission' => 1],//LISTAR
+            ['role_id' => 2, 'resource_id' => 7, 'permission' => 1],//CRIAR
+            ['role_id' => 2, 'resource_id' => 8, 'permission' => 1],//VER POR ID
+            ['role_id' => 2, 'resource_id' => 9, 'permission' => 1],//EDITAR
+            ['role_id' => 2, 'resource_id' =>10, 'permission' => 1],//DELETAR
         ];
         DB::table('permissions')->insert($data);
     }

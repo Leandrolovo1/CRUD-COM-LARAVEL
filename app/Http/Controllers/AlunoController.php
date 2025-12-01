@@ -34,17 +34,12 @@ class AlunoController extends Controller
             $aluno->curso()->associate($curso);
 
             if($request->hasFile('foto')) {
-
                 if ($aluno->foto && "\Storage"::disk('public')->exists($aluno->foto)) {
                     "\Storage"::disk('public')->delete($aluno->foto);
                 }
-
                 $extensao_arq = $request->file('foto')->getClientOriginalExtension();
-
                 $name = $aluno->id.'_'.time().'.'.$extensao_arq;
-
                 $request->file('foto')->storeAs('fotos', $name, ['disk' => 'public']);
-
                 $aluno->foto = 'fotos/'.$name;
 
             }

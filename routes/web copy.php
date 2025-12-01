@@ -10,11 +10,8 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-route::resource('/aluno', AlunoController::class);
+route::resource('/ordemServicos', AlunoController::class);
 
-route::resource('/curso', CursoController::class);
-
-route::resource('/disciplina', DisciplinasController::class);
-
+route::resource('/clientes', CursoController::class);
 
 route::get('/principal', [MainController::class, 'index']);

@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
-    <title>{{ $titulo }}</title>
+    <title><?php echo e($titulo); ?></title>
 
     <style>
         .nav-pills .nav-link.active {
@@ -22,10 +22,10 @@
 
 
 <body>
-     {{-- Botão flutuante de adicionar (somente quem pode criar) --}}
-    @if ($rota != '')
-        @can('create', $class)
-            <a href="{{ route($rota) }}" class="btn btn-secondary position-fixed"
+     
+    <?php if($rota != ''): ?>
+        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('create', $class)): ?>
+            <a href="<?php echo e(route($rota)); ?>" class="btn btn-secondary position-fixed"
                style="right: 20px; bottom: 80px; z-index: 2000;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#FFF"
                     class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
@@ -33,12 +33,12 @@
                         d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
                 </svg>
             </a>
-        @endcan
-    @endif
+        <?php endif; ?>
+    <?php endif; ?>
     <nav class="navbar sticky-top navbar-expand-md navbar-dark bg-secondary">
         <div class="container-fluid">
-            <a href="{{ route('home') }}" class="navbar-brand">
-                <img src="{{ asset('assets/img/logo_ifpr.png') }}" style="border-radius: 25%;" width="56"
+            <a href="<?php echo e(route('home')); ?>" class="navbar-brand">
+                <img src="<?php echo e(asset('assets/img/logo_ifpr.png')); ?>" style="border-radius: 25%;" width="56"
                     height="56">
                 <span class="ms-2 fs-4 fw-bold">Sistema Aula</span>
             </a>
@@ -54,7 +54,7 @@
             <div class="collapse navbar-collapse" id="itens">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item me-2">
-                        <a href="{{ route('aluno.index') }}" class="nav-link">
+                        <a href="<?php echo e(route('aluno.index')); ?>" class="nav-link">
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#FFF"
                                 class="bi bi-mortarboard-fill" viewBox="0 0 16 16">
                                 <path
@@ -65,9 +65,9 @@
                             <span class="ps-1 text-white">Alunos</span>
                         </a>
                     </li>
-                    @can('viewAny', App\Models\Aluno::class)
+                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('viewAny', App\Models\Aluno::class)): ?>
                     <li class="nav-item me-2">
-                        <a href="{{ route('curso.index') }}" class="nav-link">
+                        <a href="<?php echo e(route('curso.index')); ?>" class="nav-link">
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#FFF"
                                 class="bi bi-backpack2" viewBox="0 0 16 16">
                                 <path
@@ -80,10 +80,10 @@
                             <span class="ps-1 text-white">Cursos</span>
                         </a>
                     </li>
-                    @endcan
-                    @can('viewAny', App\Models\Disciplina::class)
+                    <?php endif; ?>
+                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('viewAny', App\Models\Disciplina::class)): ?>
                     <li class="nav-item me-2">
-                        <a href="{{ route('disciplina.index') }}" class="nav-link">
+                        <a href="<?php echo e(route('disciplina.index')); ?>" class="nav-link">
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#FFF"
                                 class="bi bi-easel2-fill" viewBox="0 0 16 16">
                                 <path
@@ -94,7 +94,7 @@
                             <span class="ps-1 text-white">Disciplinas</span>
                         </a>
                     </li>
-                    @endcan
+                    <?php endif; ?>
                     <li class="nav-item dropdown pe-3">
                         <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#">
                             <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="#FFF"
@@ -103,11 +103,12 @@
                                 <path fill-rule="evenodd"
                                     d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
                             </svg>
-                            <span class="ps-1 text-white"></span>@auth
+                            <span class="ps-1 text-white"></span><?php if(auth()->guard()->check()): ?>
                                 <span class="ps-1 text-white">
-                                    {{ Auth::user() ? explode(' ', Auth::user()->name)[0] : 'Anônimo' }}
+                                    <?php echo e(Auth::user() ? explode(' ', Auth::user()->name)[0] : 'Anônimo'); ?>
+
                                 </span>
-                            @endauth
+                            <?php endif; ?>
                         </a>
                         <ul class="dropdown-menu">
                             <li>
@@ -121,8 +122,8 @@
                                 </a>
                             </li>
                             <li>
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
+                                <form method="POST" action="<?php echo e(route('logout')); ?>">
+                                    <?php echo csrf_field(); ?>
                             <li>
                                 <a href="" onclick="event.preventDefault(); this.closest('form').submit();"
                                     class="dropdown-item">
@@ -140,22 +141,22 @@
     <div class="container py-4">
         <div class="row">
             <div class="col">
-                @if ($cabecalho != '')
-                    <h3 class="text-secondary"><b>{{ $cabecalho }}</b></h3>
-                @endif
+                <?php if($cabecalho != ''): ?>
+                    <h3 class="text-secondary"><b><?php echo e($cabecalho); ?></b></h3>
+                <?php endif; ?>
             </div>
             <div class="col d-flex justify-content-end">
-                @if ($rota != '')
-                    <a href= "{{ route($rota) }}" class="btn btn-secondary ms-2">
+                <?php if($rota != ''): ?>
+                    <a href= "<?php echo e(route($rota)); ?>" class="btn btn-secondary ms-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#FFF"
                             class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                             <path
                                 d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
                         </svg>
                     </a>
-                @endif
-                @if ($relatorio != '')
-                    <a href= "{{ route($relatorio) }}" class="btn btn-secondary ms-2" target="_blank">
+                <?php endif; ?>
+                <?php if($relatorio != ''): ?>
+                    <a href= "<?php echo e(route($relatorio)); ?>" class="btn btn-secondary ms-2" target="_blank">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#FFF"
                             class="bi bi-file-earmark-pdf-fill" viewBox="0 0 16 16">
                             <path
@@ -164,11 +165,11 @@
                                 d="M4 0h5.293A1 1 0 0 1 10 .293L13.707 4a1 1 0 0 1 .293.707V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2m5.5 1.5v2a1 1 0 0 0 1 1h2zM4.165 13.668c.09.18.23.343.438.419.207.075.412.04.58-.03.318-.13.635-.436.926-.786.333-.401.683-.927 1.021-1.51a11.7 11.7 0 0 1 1.997-.406c.3.383.61.713.91.95.28.22.603.403.934.417a.86.86 0 0 0 .51-.138c.155-.101.27-.247.354-.416.09-.181.145-.37.138-.563a.84.84 0 0 0-.2-.518c-.226-.27-.596-.4-.96-.465a5.8 5.8 0 0 0-1.335-.05 11 11 0 0 1-.98-1.686c.25-.66.437-1.284.52-1.794.036-.218.055-.426.048-.614a1.24 1.24 0 0 0-.127-.538.7.7 0 0 0-.477-.365c-.202-.043-.41 0-.601.077-.377.15-.576.47-.651.823-.073.34-.04.736.046 1.136.088.406.238.848.43 1.295a20 20 0 0 1-1.062 2.227 7.7 7.7 0 0 0-1.482.645c-.37.22-.699.48-.897.787-.21.326-.275.714-.08 1.103" />
                         </svg>
                     </a>
-                @endif
+                <?php endif; ?>
             </div>
         </div>
         <hr>
-        @yield('conteudo')
+        <?php echo $__env->yieldContent('conteudo'); ?>
     </div>
     <nav class="navbar fixed-bottom navbar-dark bg-secondary">
         <div class="container-fluid">
@@ -233,7 +234,8 @@
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-<script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
-@yield('script')
+<script src="<?php echo e(asset('assets/js/jquery-3.6.0.min.js')); ?>"></script>
+<?php echo $__env->yieldContent('script'); ?>
 
 </html>
+<?php /**PATH D:\Programacao\trabalho_gil_tca\TCA-GIL\CRUD-COM-LARAVEL\resources\views/templates/main.blade.php ENDPATH**/ ?>

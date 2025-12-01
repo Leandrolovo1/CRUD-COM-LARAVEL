@@ -13,18 +13,18 @@ class ResourceSeeder extends Seeder
     public function run(): void
     {
         $data = [
-            // CURSO
-            ['name' => 'curso.index'], // 1
-            ['name' => 'curso.create'], // 2
-            ['name' => 'curso.show'], // 3
-            ['name' => 'curso.edit'], // 4
-            ['name' => 'curso.delete'], // 5
-            // ALUNO
-            ['name' => 'aluno.index'], // 6
-            ['name' => 'aluno.create'], // 7
-            ['name' => 'aluno.show'], // 8
-            ['name' => 'aluno.edit'], // 9
-            ['name' => 'aluno.delete'], // 10
+            // ORDEM DE SERVIÇO
+            ['name' => 'ordemServicos.index'], // 1
+            ['name' => 'ordemServicos.create'], // 2
+            ['name' => 'ordemServicos.show'], // 3
+            ['name' => 'ordemServicos.edit'], // 4
+            ['name' => 'ordemServicos.delete'], // 5
+            // USUARIOS
+            ['name' => 'clientes.index'], // 6
+            ['name' => 'clientes.create'], // 7
+            ['name' => 'clientes.show'], // 8
+            ['name' => 'clientes.edit'], // 9
+            ['name' => 'clientes.delete'], // 10
         ];
         DB::table('resources')->insert($data);
     }
